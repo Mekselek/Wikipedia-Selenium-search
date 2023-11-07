@@ -27,10 +27,17 @@ public class WikipediaTest {
                 .sendKeys(searchField, "Wikipedia")
                 .sendKeys(searchField, Keys.ENTER)
                 .perform();
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/span[text()='Wikipedia']")));
+
         driver.findElement(By.xpath("//div/span[text()='Wikipedia']")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("search")));
+
         WebElement wikiSearchField = driver.findElement(By.name("search"));
+
         String valueAssertion = wikiSearchField.getAttribute("placeholder");
         String expectedPlaceholderValue = "Przeszukaj Wikipedię";
 
@@ -40,6 +47,11 @@ public class WikipediaTest {
                 .sendKeys(wikiSearchField, "Kasztanowiec")
                 .sendKeys(wikiSearchField, Keys.ENTER)
                 .perform();
+
+        WebElement titleName = driver.findElement(By.className("mw-page-title-main"));
+        String titleText = titleName.getText();
+        String exp = "Kasztanowiec";
+        Assert.assertEquals(exp, titleText);
     }
 
 }
