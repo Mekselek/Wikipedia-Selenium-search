@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -7,8 +8,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
+
+
 
 public class WikipediaTest {
     @Test
@@ -29,6 +31,11 @@ public class WikipediaTest {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/span[text()='Wikipedia']")));
         driver.findElement(By.xpath("//div/span[text()='Wikipedia']")).click();
         WebElement wikiSearchField = driver.findElement(By.name("search"));
+        String valueAssertion = wikiSearchField.getAttribute("placeholder");
+        String expectedPlaceholderValue = "Przeszukaj Wikipedię";
+
+        Assert.assertEquals(expectedPlaceholderValue, valueAssertion);
+
         new Actions(driver)
                 .sendKeys(wikiSearchField, "Kasztanowiec")
                 .sendKeys(wikiSearchField, Keys.ENTER)
